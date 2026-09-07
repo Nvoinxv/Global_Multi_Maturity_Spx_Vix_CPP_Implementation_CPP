@@ -30,7 +30,7 @@ void Get_Data_Market::membaca_api_key_finhub(
     }
     else
     {
-        std::ifstream env_variabel(".env");
+        std::ifstream env_variabel("/home/nvoinxv/Documents/Global_Multi_Maturity_SPX_VIX_project_cpp/.env");
         read_variabel.load_env(env_variabel);
         std::string finhub_api_key = read_variabel.get_env("FINHUB_API_KEY");
         std::string finhub_url = read_variabel.get_env("FINHUB_URL");
@@ -42,10 +42,7 @@ void Get_Data_Market::membaca_api_key_finhub(
     if (curl)
     {
         curl_easy_setopt(curl, CURLOPT_URL, full_url.c_str());
-<<<<<<< HEAD
-=======
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
->>>>>>> 485389e (perubahan kode)
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, Get_Data_Market::WriteCallBack);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
 
