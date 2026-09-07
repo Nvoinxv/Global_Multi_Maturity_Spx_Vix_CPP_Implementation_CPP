@@ -18,21 +18,17 @@ class read_env_variabel {
     std::stringstream ss;
     std::string token;
 
-    float value;
-    float return_numeric_split;
+    std::string value;
+    std::vector<float> return_numeric_split;
 
     public:
-    read_env_data();
+    read_env_variabel();
     
     std::vector<std::string> split_character_string(
         const std::string& str, char delimiter
     );
 
-    std::vector<float> split_character_numeric(
-        const float& value, char delimiter
-    );
-
-    void load_env(std::ifstream& Input_File_Env(".env"));
+    void load_env(std::ifstream& Input_File_Env);
 };
 
 #endif
