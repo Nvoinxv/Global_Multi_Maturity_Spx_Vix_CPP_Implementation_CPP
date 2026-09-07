@@ -34,7 +34,7 @@ void Get_Data_Market::membaca_api_key_finhub(
 
     if (curl)
     {
-        curl_easy_setopt(curl, CURLOPT_URL, full_url);
+        curl_easy_setopt(curl, CURLOPT_URL, full_url.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, Get_Data_Market::WriteCallBack);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
 
