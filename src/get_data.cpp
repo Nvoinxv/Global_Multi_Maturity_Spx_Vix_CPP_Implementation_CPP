@@ -1,6 +1,6 @@
 #include "get_data.hpp"
 
-Get_Data_Market::Get_Data_Market() : curl(), res(), read_variabel(),
+Get_Data_Market::Get_Data_Market() : curl(nullptr), res(CURLE_OK), read_variabel(),
                                      variabel_api(), variabel_url()
 {
 }
@@ -23,22 +23,33 @@ void Get_Data_Market::membaca_api_key_finhub(
     curl = curl_easy_init();
     std::string response;
 
-    std::ifstream env_variabel("/home/nvoinxv/Documents/Global_Multi_Maturity_SPX_VIX_project_cpp/.env");
-    read_variabel.load_env(env_variabel);
-    std::string finhub_api_key = read_variabel.get_env("FINHUB_API_KEY");
-    std::string finhub_url = read_variabel.get_env("FINHUB_URL");
-
-    std::string full_url = finhub_url + finhub_api_key;
+    std::string full_url;
+    if (!variabel_url.empty() && !variabel_api.empty())
+    {
+        full_url = variabel_url + variabel_api;
+    }
+    else
+    {
+        std::ifstream env_variabel(".env");
+        read_variabel.load_env(env_variabel);
+        std::string finhub_api_key = read_variabel.get_env("FINHUB_API_KEY");
+        std::string finhub_url = read_variabel.get_env("FINHUB_URL");
+        full_url = finhub_url + finhub_api_key;
+    }
 
     std::cout << "Request URL : " << full_url << "\n";
 
     if (curl)
     {
         curl_easy_setopt(curl, CURLOPT_URL, full_url.c_str());
+<<<<<<< HEAD
+=======
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+>>>>>>> 485389e (perubahan kode)
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, Get_Data_Market::WriteCallBack);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
 
-        CURLcode res = curl_easy_perform(curl);
+        res = curl_easy_perform(curl);
         curl_easy_cleanup(curl);
 
         if (res != CURLE_OK)
@@ -48,10 +59,24 @@ void Get_Data_Market::membaca_api_key_finhub(
             return;
         }
 
-        json data = json::parse(response);
-        std::cout << "Price SPX : $" << data["c"] << "\n";
-        std::cout << "High      : $" << data["h"] << "\n";
-        std::cout << "Low       : $" << data["l"] << "\n";
-        std::cout << "Prev Close: $" << data["pc"] << "\n";
+        try
+        {
+            json data = json::parse(response);
+            if (data.contains("c"))
+            {
+                std::cout << "Price SPX : $" << data["c"] << "\n";
+                std::cout << "High      : $" << data["h"] << "\n";
+                std::cout << "Low       : $" << data["l"] << "\n";
+                std::cout << "Prev Close: $" << data["pc"] << "\n";
+            }
+            else
+            {
+                std::cout << "Response  : " << response << "\n";
+            }
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "ERROR: " << e.what() << "\n";
+        }
     }
 }

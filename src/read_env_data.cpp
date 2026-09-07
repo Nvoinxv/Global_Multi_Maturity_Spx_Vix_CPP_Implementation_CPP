@@ -54,6 +54,27 @@ void read_env_variabel::load_env(std::ifstream &Input_File_Env)
             key = row.substr(0, position_equal);
             value = row.substr(position_equal + 1);
 
+            while (!key.empty() && (key.back() == ' ' || key.back() == '\t' || key.back() == '\r' || key.back() == '\n'))
+            {
+                key.pop_back();
+            }
+            while (!key.empty() && (key.front() == ' ' || key.front() == '\t'))
+            {
+                key.erase(0, 1);
+            }
+            while (!value.empty() && (value.back() == ' ' || value.back() == '\t' || value.back() == '\r' || value.back() == '\n'))
+            {
+                value.pop_back();
+            }
+            while (!value.empty() && (value.front() == ' ' || value.front() == '\t'))
+            {
+                value.erase(0, 1);
+            }
+            if (value.size() >= 2 && ((value.front() == '"' && value.back() == '"') || (value.front() == '\'' && value.back() == '\'')))
+            {
+                value = value.substr(1, value.size() - 2);
+            }
+
             env_data[key] = value;
 
             std::cout << "Key   : " << key << std::endl;
