@@ -28,7 +28,7 @@ void read_env_variabel::load_env(std::ifstream &Input_File_Env)
 {
     if (Input_File_Env.is_open())
     {
-        std::cout << "Input file .env terdeteksi!" << std::endl;
+        std::cout << "INPUT FILE DETECTED!" << std::endl;
 
         while (std::getline(Input_File_Env, row))
         {
@@ -64,7 +64,7 @@ void read_env_variabel::load_env(std::ifstream &Input_File_Env)
     }
     else
     {
-        std::cout << "File pada .env belum terdeteksi!" << std::endl;
+        std::cout << "FILE .env Doesn't Detected!" << std::endl;
     }
 }
 

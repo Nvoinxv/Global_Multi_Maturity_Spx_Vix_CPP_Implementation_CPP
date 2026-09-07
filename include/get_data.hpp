@@ -6,21 +6,29 @@
 #include <string>
 #include <nlohmann/json.hpp>
 
-class Get_Data_Market {
-    private:
+class Get_Data_Market
+{
+private:
     CURL *curl;
-    CURLCODE res;
+    CURLcode res;
 
     read_env_variabel read_variabel;
-    std::ifstream env_variabel_path("/home/nvoinxv/Documents/Global_Multi_Maturity_SPX_VIX_project_cpp/.env");
 
-    public:
-    size_t WriteCallBack(
-        void* contents, size_t size,
-        size_t nmeb, std::string* output
-    );
+    std::string variabel_api;
+    std::string variabel_url;
 
-    void membaca_api_key_finhub();
+public:
+    Get_Data_Market();
+
+    static size_t WriteCallBack(
+        void *contents, size_t size,
+        size_t nmeb, std::string *output);
+
+    using json = nlohmann::json;
+
+    void membaca_api_key_finhub(
+        std::string variabel_api,
+        std::string variabel_url);
 };
 
 #endif
