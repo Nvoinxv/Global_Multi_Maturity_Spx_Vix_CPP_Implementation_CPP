@@ -10,14 +10,16 @@
 
 class read_env_variabel {
     private:
-    std::ifstream Input_File_Env(".env");
+    std::ifstream Input_File_Env;
     std::string row;
     std::string equal_symbol;
     std::string key;
     std::vector<std::string> return_string_split;
     std::stringstream ss;
     std::string token;
+
     float value;
+    float return_numeric_split;
 
     public:
     read_env_data();

@@ -11,32 +11,107 @@ token()  {
 std::vector<std::string> read_env_data::split_character_string(
     const std::string& str, char delimiter
 ) {
+    ss.clear();
+    ss.str(str);
+
+    return_string_split.clear();
+
+    while (std::getline(ss, token, delimiter)) {
+        return_string_split.push_back(token);
+    }
+
+    return return_string_split;
+}
+
+std::vector<float> read_env_data::split_character_numeric(
+    const float& value, char delimiter
+) {
+    ss.clear();
+    ss.str(str);
+
+    return_numeric_split.clear();
+    
+    while (std::getline(ss, token, delimiter)) {
+        return_numeric_split.push_back(token);
+    }
+
+    return return_numeric_split;
+}
+
+```cpp
+#include "read_env_data.hpp"
+
+read_env_data::read_env_data() :
+Input_File_Env(), row(), equal_symbol(),
+key(), value(),
+return_string_split(), return_numeric_split(),
+ss(), token() {
 
 }
 
-void read_env_data::load_env(
-    std::ifstream& Input_File_Env(".env")
+std::vector<std::string> read_env_data::split_character_string(
+    const std::string& str, char delimiter
 ) {
+    ss.clear();
+    ss.str(str);
+
+    return_string_split.clear();
+
+    while (std::getline(ss, token, delimiter)) {
+        return_string_split.push_back(token);
+    }
+
+    return return_string_split;
+}
+
+std::vector<float> read_env_data::split_character_numeric(
+    const std::string& str, char delimiter
+) {
+    ss.clear();
+    ss.str(str);
+
+    return_numeric_split.clear();
+
+    while (std::getline(ss, token, delimiter)) {
+        return_numeric_split.push_back(std::stof(token));
+    }
+
+    return return_numeric_split;
+}
+
+void read_env_data::load_env() {
+    Input_File_Env.open(".env");
+
     if (Input_File_Env.is_open()) {
-        while (getline(Input_File_Env, row)) {
-            std::cout << "Input file .env terdeteksi!" << std::endl;
+        std::cout << "Input file .env terdeteksi!" << std::endl;
+
+        while (std::getline(Input_File_Env, row)) {
+            if (row.empty()) {
+                continue;
+            }
+
+            if (row[0] == '#') {
+                continue;
+            }
+
+            equal_symbol = "=";
+
+            std::size_t posisi_equal = row.find(equal_symbol);
+
+            if (posisi_equal == std::string::npos) {
+                continue;
+            }
+
+            key = row.substr(0, posisi_equal);
+            value = row.substr(posisi_equal + 1);
+
+            std::cout << "Key   : " << key << std::endl;
+            std::cout << "Value : " << value << std::endl;
         }
 
-        if (!line || line.compare("#")) {
-            continue;
-        }
-
-        equal_symbol = "=";
-
-        if (line.find(equal_symbol) != line) {
-            continue;
-        }
-        
-        key = 
         Input_File_Env.close();
     } else {
         std::cout << "File pada .env belum terdeteksi!" << std::endl;
     }
-
-
 }
+```
