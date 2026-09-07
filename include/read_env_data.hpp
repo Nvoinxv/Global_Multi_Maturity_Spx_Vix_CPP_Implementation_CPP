@@ -7,6 +7,7 @@
 #include <vector>
 #include <set>
 #include <string>
+#include <map>
 
 class read_env_variabel {
     private:
@@ -17,7 +18,7 @@ class read_env_variabel {
     std::vector<std::string> return_string_split;
     std::stringstream ss;
     std::string token;
-
+    std::map<std::string, std::string> env_data;
     std::string value;
     std::vector<float> return_numeric_split;
 
@@ -29,6 +30,10 @@ class read_env_variabel {
     );
 
     void load_env(std::ifstream& Input_File_Env);
+   
+    std::string get_env(
+        const std::string& key
+    );
 };
 
 #endif

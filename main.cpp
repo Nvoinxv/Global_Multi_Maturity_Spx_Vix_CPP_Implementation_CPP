@@ -1,11 +1,16 @@
 #include "read_env_data.hpp"
 
-int main() {
+int main()
+{
     std::cout << "START PROGRAM QUANT TRADING" << std::endl;
-    
+
     read_env_variabel read_variabel;
     std::ifstream env_variabel_path("/home/nvoinxv/Documents/Global_Multi_Maturity_SPX_VIX_project_cpp/.env");
     read_variabel.load_env(env_variabel_path);
+
+    std::string variabel_env_detect_test = read_variabel.get_env("FINHUB_API_KEY");
+
+    std::cout << "FINHUB API KEY: " << variabel_env_detect_test << std::endl;
 
     return 0;
 }
