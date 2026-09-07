@@ -4,7 +4,7 @@ read_env_variabel::read_env_variabel() :
 Input_File_Env(), row(), equal_symbol(),
 key(), value(),
 return_string_split(), ss(),
-token(),return_numeric_split(), str()  {
+token(),return_numeric_split() {
 
 }
 
