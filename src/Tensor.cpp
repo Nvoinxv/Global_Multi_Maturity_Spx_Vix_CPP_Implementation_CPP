@@ -1,6 +1,8 @@
 #include "Tensor.hpp"
 
-Tensor_Broadcasting::Tensor_Broadcasting() : data(), shape(), indexing(0), ndim(0), A(), B()
+Tensor_Broadcasting::Tensor_Broadcasting() : data(), shape(),
+                                             indexing(0), ndim(0), A(), B(),
+                                             shape_A(), shape_B()
 {
     // kosong
 }
@@ -70,27 +72,31 @@ std::vector<int> Tensor_Broadcasting::shape_tensor(
 }
 
 std::vector<float> Tensor_Broadcasting::stride_tensor(
-    std::vector<float> &shape)
+    std::vector<int> &shape_A,
+    std::vector<int> &shape_B)
 {
-    A.clear();
-    B.clear();
-
-    A.reserve(shape.size() * 2);
-    A.insert(shape.end(), A.begin(), A.end());
-
-    B.reserve(shape.size() * 2);
-    B.insert(shape.end(), B.begin(), B.end());
-
-    std::vector<float> strides;
-    strides.insert(shape.end(), strides.begin(), strides.end());
+    std::vector<int> shape_object_tensor = shape_tensor(shape_A, shape_B);
 
     std::vector<float> return_strides_tensor;
+    return_strides_tensor.reserve(shape_object_tensor.size());
 
-    for (int i = 0; i < strides.size(); i++)
+    float stride = 1.0f;
+    for (int i = shape_object_tensor.size() - 1; i >= 0; i--)
     {
-        for (int j = 0; j <)
+        return_strides_tensor.insert(return_strides_tensor.begin(), stride);
+        stride *= shape_object_tensor[i];
     }
-};
+
+    for (int i = 0; i < return_strides_tensor.size(); i++)
+    {
+        if (shape_object_tensor[i] == 1)
+        {
+            return_strides_tensor[i] = 0.0f;
+        }
+    }
+
+    return return_strides_tensor;
+}
 
 std::vector<float> Tensor_Broadcasting::indexing_tensor(
     std::vector<float> &data,

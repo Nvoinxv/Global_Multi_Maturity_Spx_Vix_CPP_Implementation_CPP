@@ -19,10 +19,17 @@ private:
     std::vector<float> A;
     std::vector<float> B;
 
+    std::vector<int> shape_A;
+    std::vector<int> shape_B;
+
 public:
     Tensor_Broadcasting();
 
     std::vector<int> shape_tensor(
+        std::vector<int> &shape_A,
+        std::vector<int> &shape_B);
+
+    std::vector<float> stride_tensor(
         std::vector<int> &shape_A,
         std::vector<int> &shape_B);
 
