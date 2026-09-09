@@ -69,6 +69,29 @@ std::vector<int> Tensor_Broadcasting::shape_tensor(
     return return_program;
 }
 
+std::vector<float> Tensor_Broadcasting::stride_tensor(
+    std::vector<float> &shape)
+{
+    A.clear();
+    B.clear();
+
+    A.reserve(shape.size() * 2);
+    A.insert(shape.end(), A.begin(), A.end());
+
+    B.reserve(shape.size() * 2);
+    B.insert(shape.end(), B.begin(), B.end());
+
+    std::vector<float> strides;
+    strides.insert(shape.end(), strides.begin(), strides.end());
+
+    std::vector<float> return_strides_tensor;
+
+    for (int i = 0; i < strides.size(); i++)
+    {
+        for (int j = 0; j <)
+    }
+};
+
 std::vector<float> Tensor_Broadcasting::indexing_tensor(
     std::vector<float> &data,
     std::vector<int> &shape)
